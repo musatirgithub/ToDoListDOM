@@ -1,3 +1,4 @@
+const taskList = [];
 const addTask = document.querySelector('.add-task');
 const tasks = document.querySelector('.tasks');
 const input = document.querySelector('.input-group input');
@@ -14,6 +15,16 @@ todo.addEventListener('keydown', (event)=>{
 function taskAdder(){
     tasks.innerHTML += `<div class="task"><div class="left"><input class = "check" type="checkbox" name="" id=""><p>${todo.value}</p></div><i class="fa-solid fa-trash-can"></i></div>`
     todo.value = '';
+    let completed = 0;
+    let rest = 0;
+    document.querySelectorAll('.check').forEach((a)=>{
+        if (a.parentElement.classList.contains('strikethrough')) {
+            completed++;
+        } else {
+            rest++;
+        }
+    })
+    document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`;
 }
 
 // this part of code is for returning feedback about the number of completed tasks
@@ -32,5 +43,5 @@ tasks.addEventListener('click', (event) =>{
         rest++;
     }
 })
-document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`
+document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`;
 });
