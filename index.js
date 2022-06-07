@@ -13,35 +13,31 @@ todo.addEventListener('keydown', (event)=>{
 })
 
 function taskAdder(){
-    tasks.innerHTML += `<div class="task"><div class="left"><input class = "check" type="checkbox" name="" id=""><p>${todo.value}</p></div><i class="fa-solid fa-trash-can"></i></div>`
+    tasks.innerHTML += `<div class="task"><div class="left"><i class="fa-regular fa-square check"></i><p>${todo.value}</p></div><i class="fa-solid fa-trash-can"></i></div>`
     todo.value = '';
-    let completed = 0;
-    let rest = 0;
-    document.querySelectorAll('.check').forEach((a)=>{
-        if (a.parentElement.classList.contains('strikethrough')) {
-            completed++;
-        } else {
-            rest++;
-        }
-    })
-    document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`;
+    returnStats();
 }
 
 // this part of code is for returning feedback about the number of completed tasks
 tasks.addEventListener('click', (event) =>{
    if (event.target.classList.contains('check')){
        event.target.parentElement.classList.toggle('strikethrough');
+       
    } else if (event.target.classList.contains('fa-trash-can')){
     event.target.parentElement.remove();
    }
-   let completed = 0;
-   let rest = 0;
-   document.querySelectorAll('.check').forEach((a)=>{
-    if (a.parentElement.classList.contains('strikethrough')) {
-        completed++;
-    } else {
-        rest++;
-    }
-})
-document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`;
+   returnStats();
 });
+
+function returnStats(){
+    let completed = 0;
+    let rest = 0;
+    document.querySelectorAll('.check').forEach((a)=>{
+     if (a.parentElement.classList.contains('strikethrough')) {
+         completed++;
+     } else {
+         rest++;
+     }
+ })
+ document.querySelector('.stats p').innerText = `${completed} OUT OF ${completed+rest} TASKS COMPLETED`;
+}
