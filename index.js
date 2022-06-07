@@ -20,10 +20,13 @@ function taskAdder(){
 
 // this part of code is for returning feedback about the number of completed tasks
 tasks.addEventListener('click', (event) =>{
-   if (event.target.classList.contains('check')){
-       event.target.parentElement.classList.toggle('strikethrough');
-       
-   } else if (event.target.classList.contains('fa-trash-can')){
+   if (event.target.classList.contains('fa-square')){
+       event.target.parentElement.classList.add('strikethrough');
+       event.target.className = 'fa-solid fa-x check'; // <i class="fa-solid fa-x"></i>
+   } else if (event.target.classList.contains('fa-x')) {
+       event.target.parentElement.classList.remove('strikethrough');
+        event.target.className = 'fa-regular fa-square check';
+   }else if (event.target.classList.contains('fa-trash-can')){
     event.target.parentElement.remove();
    }
    returnStats();
