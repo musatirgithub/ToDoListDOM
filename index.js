@@ -13,9 +13,13 @@ todo.addEventListener('keydown', (event)=>{
 })
 
 function taskAdder(){
-    tasks.innerHTML += `<div class="task"><div class="left"><i class="fa-regular fa-square check"></i><p>${todo.value}</p></div><i class="fa-solid fa-trash-can"></i></div>`
-    todo.value = '';
-    returnStats();
+    if (input.value == ''){
+        alert("Task can't be empty!" )
+    }else {
+        tasks.innerHTML += `<div class="task"><div class="left"><i class="fa-regular fa-square check"></i><p>${todo.value}</p></div><i class="fa-solid fa-trash-can"></i></div>`
+        todo.value = '';
+        returnStats();
+    }
 }
 
 // this part of code is for returning feedback about the number of completed tasks
