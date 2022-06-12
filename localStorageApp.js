@@ -6,9 +6,9 @@ let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
 
 function taskLoader(){
     todoList.forEach((todo) =>{
-        let {content, isDone} = todo;
+        let {id, content, isDone} = todo;
         tasks.innerHTML += `
-        <div class="task">
+        <div class="task" id=${id} isDone=${isDone}>
             <div class="left">
                 <i class="fa-regular fa-square check"></i>
                 <p>${content}</p>
@@ -25,23 +25,26 @@ window.addEventListener('load', taskLoader);
 
 function taskAdder(){
     if (myInput.value != ''){
-        tasks.innerHTML += `
-        <div class="task">
-            <div class="left">
-                <i class="fa-regular fa-square check"></i>
-                <p>${myInput.value}</p>
-            </div>
-                <i class="fa-solid fa-trash-can"></i>
-        </div>
-        `
         const todoObject = {
             'id':  new Date().getTime(),
             'content' : myInput.value,
             'isDone': false
         }
+
+        tasks.innerHTML += `
+        <div class="task" id=${todoObject.id} isDone=${todoObject.isDone}>
+            <div class="left">
+                <i class="fa-regular fa-square check"></i>
+                <p>${myInput.value}</p>
+            </div>
+            <i class="fa-solid fa-trash-can"></i>
+        </div>
+        `
+
         todoList.push(todoObject);
         localStorage.setItem('todoList', JSON.stringify(todoList));
         taskCounter();
+        myInput.value = '';
     }else{
         alert(`Task can't be empty!`);
     }
@@ -58,8 +61,10 @@ tasks.addEventListener('click', (event)=>{
     if (event.target.classList.contains('fa-square')){
         event.target.parentElement.classList.add('strikethrough');
         event.target.className = 'fa-solid fa-x check';
+        event.target.parentElement.parentElement.isDone = true;
+
         todoList.forEach((a) => {
-            if (a.content == event.target.nextElementSibling.innerText){
+            if (a.id == event.target.parentElement.parentElement.id){
                 a.isDone = true;
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
@@ -69,7 +74,7 @@ tasks.addEventListener('click', (event)=>{
         event.target.parentElement.classList.remove('strikethrough');
         event.target.className = 'fa-regular fa-square check';
         todoList.forEach((a) => {
-            if (a.content == event.target.nextElementSibling.innerText){
+            if (a.id == event.target.parentElement.parentElement.id){
                 a.isDone = false;
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
@@ -78,7 +83,7 @@ tasks.addEventListener('click', (event)=>{
     } else if (event.target.classList.contains('fa-trash-can')){
         if (event.target.previousElementSibling.firstElementChild.classList.contains('fa-x')){
             event.target.parentElement.remove();
-            todoList = todoList.filter((a) => a.content != event.target.previousElementSibling.lastElementChild.innerText);
+            todoList = todoList.filter((a) => a.id != event.target.parentElement.id);
             localStorage.setItem('todoList', JSON.stringify(todoList));
         } else {
             alert("Please complete the task!")
@@ -90,5 +95,5 @@ tasks.addEventListener('click', (event)=>{
 function taskCounter(){
     const totalTasks = JSON.parse(localStorage.getItem('todoList')).length;
     const completedTasks = JSON.parse(localStorage.getItem('todoList')).filter((a) => a.isDone == true).length;
-    document.querySelector('.stats p').innerText = `${completedTasks} OUT OF ${totalTasks} TASKS COMPLETED`
+    document.querySelector('.stats p').innerText = `${completedTasks} OUT OF ${totalTasks} TASKS COMPLETED`;
 }
