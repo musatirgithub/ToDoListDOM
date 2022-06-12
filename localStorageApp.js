@@ -9,8 +9,8 @@ function taskLoader(){
         let {id, content, isDone} = todo;
         tasks.innerHTML += `
         <div class="task" id=${id} isDone=${isDone}>
-            <div class="left">
-                <i class="fa-regular fa-square check"></i>
+            <div class="left ${isDone ? 'strikethrough': ''}">
+                <i class="${isDone ? 'fa-solid fa-x': 'fa-regular fa-square check'}"></i>
                 <p>${content}</p>
             </div>
                 <i class="fa-solid fa-trash-can"></i>
