@@ -114,3 +114,29 @@ h1{
 .strikethrough i{
     color: rgba(150, 126, 72, 0.7);
 }
+
+@media screen and (max-width: 650px){
+    .container{
+        width: 350px;
+    }
+
+    h1{
+        width: 350px;
+    }
+
+    .inputs{
+        width: 22rem;
+    }
+
+    .tasks{
+        width: 20rem;
+    }
+
+    .task p{
+        width: 15rem;
+    }
+
+    .stats{
+        width: 20rem;
+    }
+}
